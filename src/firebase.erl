@@ -14,7 +14,6 @@ get(Path, Opts) ->
     _Fresh = proplists:get_value(fresh, Opts, false),
     FullUrl = lists:flatten(io_lib:format("~s/~s?auth=~s&shallow=~s",
         [Url, Path, AuthToken, Shallow])),
-    lager:info("Fetching url ~s", [FullUrl]),
     Fetch = fun(URL) ->
         case {httpc_return, httpc:request(URL)} of
             {httpc_return, {ok, {{_,200,_}, _, Result}}} ->

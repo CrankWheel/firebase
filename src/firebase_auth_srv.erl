@@ -16,7 +16,6 @@ start_link() ->
 
 init(_Args) ->
     CL = application:get_all_env(firebase_erlang),
-    lager:info("~s config: ~p", [?MODULE, CL]),
     State = #state {
         secret = proplists:get_value(auth_secret, CL, ""),
         expiration = proplists:get_value(auth_expiration, CL, 86400),
