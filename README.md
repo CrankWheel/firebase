@@ -18,4 +18,4 @@ Caching, and supporting other stuff than GET.
 Build
 -----
 
-    $ rebar3 compile
+    $ ./rebar3 compile
