@@ -8,7 +8,7 @@ get(Path) ->
     get(Path, []).
 
 get(Path, Opts) ->
-    Url = application:get_env(firebase, url),
+    Url = application:get_env(firebase, url, ""),
     AuthToken = gen_server:call(firebase_auth_srv, get_token),
     Shallow = proplists:get_value(shallow, Opts, false),
     _Fresh = proplists:get_value(fresh, Opts, false),
