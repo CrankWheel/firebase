@@ -10,7 +10,10 @@
     asn1,
     public_key,
     ssl,
-    inets
+    inets,
+    lager,
+    jiffy,
+    ejwt
    ]},
   {env,[]},
   {modules, []},

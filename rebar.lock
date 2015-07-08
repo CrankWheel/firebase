@@ -13,4 +13,5 @@
  {<<"ejwt">>,
   {git,"https://github.com/kato-im/ejwt.git",
        {ref,"9e806e815eb49fcaf31e95bd21eba10f6298b73e"}},
-  0}].
+  0},
+  {<<"lager">>,{pkg,<<"lager">>,<<"2.1.1">>},0}].
