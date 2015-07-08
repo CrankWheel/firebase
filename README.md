@@ -1,2 +1,9 @@
-# fierlbase
-Firebase Rest API for Erlang
+firebase_erlang
+=====
+
+An OTP application
+
+Build
+-----
+
+    $ rebar3 compile

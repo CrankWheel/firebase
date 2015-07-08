@@ -1,0 +1,21 @@
+{application, 'firebase',
+ [{description, "Firebase REST API for Erlang"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, {'firebase_app', []}},
+  {applications,
+   [kernel,
+    stdlib,
+    crypto,
+    asn1,
+    public_key,
+    ssl,
+    inets
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {contributors, []},
+  {licenses, []},
+  {links, []}
+ ]}.
