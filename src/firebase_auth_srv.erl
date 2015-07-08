@@ -15,7 +15,7 @@ start_link() ->
     gen_server:start_link({local, firebase_auth_srv}, firebase_auth_srv, [], []).
 
 init(_Args) ->
-    CL = application:get_all_env(firebase_erlang),
+    CL = application:get_all_env(firebase),
     State = #state {
         secret = proplists:get_value(auth_secret, CL, ""),
         expiration = proplists:get_value(auth_expiration, CL, 86400),

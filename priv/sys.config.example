@@ -1,6 +1,6 @@
 [
     {firebase, [
-    {firebase_url, "https//my-firebase-instance.firebaseio.com"},
+        {url, "https//my-firebase-instance.firebaseio.com"},
         {auth_secret, "MY FIREBASE SECRET"},
         {auth_claim, [{uid, <<"my-server">>}]},
         {auth_expiration, 86400}
