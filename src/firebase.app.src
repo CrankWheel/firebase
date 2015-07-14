@@ -12,7 +12,8 @@
     ssl,
     inets,
     jiffy,
-    ejwt
+    ejwt,
+    cache
    ]},
   {env,[]},
   {modules, []},
