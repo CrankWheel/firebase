@@ -2,8 +2,6 @@
 -module(firebase).
 -export([get/1, get/2]).
 
-% TODO: in-memory caching
-
 get(Path) ->
     get(Path, []).
 
@@ -11,14 +9,16 @@ get(Path, Opts) ->
     Url = application:get_env(firebase, url, ""),
     AuthToken = gen_server:call(firebase_auth_srv, get_token),
     Shallow = proplists:get_value(shallow, Opts, false),
-    _Fresh = proplists:get_value(fresh, Opts, false),
+    Fresh = proplists:get_value(fresh, Opts, false),
     FullUrl = lists:flatten(io_lib:format("~s/~s?auth=~s&shallow=~s",
         [Url, Path, AuthToken, Shallow])),
-    Fetch = fun(URL) ->
+    Key = Url ++ Path ++ Shallow,
+    Fetch = fun(URL, KEY) ->
         case {httpc_return, httpc:request(URL)} of
             {httpc_return, {ok, {{_,200,_}, _, Result}}} ->
                 case {result, jiffy:decode(Result)} of
                     {result, {Proplist}} when is_list(Proplist) ->
+                        cache:put({global, firebase_cache}, KEY, Proplist),
                         {ok, Proplist};
                     {result, _} ->
                         {ok, []}
@@ -43,7 +43,12 @@ get(Path, Opts) ->
                 {error, Error}
         end
     end,
-    % Check cache, if it exists in cache and isn't too old, return from cache
-    % otherwise run Fetch(Url) and insert into cache if we get an 'ok' response.
-    % If Fresh is true, just return from Fetch and update cache.
-    Fetch(FullUrl).
+    case Fresh of
+        true -> Fetch(FullUrl, Key);
+        false ->
+            case cache:lookup({global, firebase_cache}, Key) of
+                undefined -> Fetch(FullUrl, Key);
+                Proplist -> {ok, Proplist}
+            end
+    end.
+
