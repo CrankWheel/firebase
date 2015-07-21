@@ -40,14 +40,13 @@ handle_call(get_token, _From, State) ->
             Halflife = State#state.expiration / 2,
             if
                 (CurrentTS - CreationTS) > Halflife ->
-                    Jwt = create_jwt(CurrentTS, State),
-                    NewState = State#state {current_jwt = Jwt,
+                    NewJwt = create_jwt(CurrentTS, State),
+                    NewState = State#state {current_jwt = NewJwt,
                                             current_creation_ts = CurrentTS
                                            },
-                    {reply, Jwt, NewState};
+                    {reply, NewJwt, NewState};
                 true -> % else ...
-                    Jwt = State#state.current_jwt,
-                    {reply, Jwt, State}
+                    {reply, State#state.current_jwt, State}
             end
     end.
 
