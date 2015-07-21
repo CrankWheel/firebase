@@ -46,7 +46,7 @@ handle_call(get_token, _From, State) ->
                                            },
                     {reply, NewJwt, NewState};
                 true -> % else ...
-                    {reply, State#state.current_jwt, State}
+                    {reply, Jwt, State}
             end
     end.
 
